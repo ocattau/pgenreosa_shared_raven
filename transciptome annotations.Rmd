@@ -4,6 +4,7 @@ author: "Olivia Cattau"
 date: "2/24/2022"
 output: pdf_document
 ---
+#P.generosa (Pacific Geoduck) combined early stages and late stages transcriptomes for analyses and annotations 
 #load count data from kallisto output(s)
 ```{r}
 countMatrix<-read.table(file="https://raw.githubusercontent.com/sr320/nb-2022/main/P_generosa/analyses/kallisto-0207.isoform.counts.matrix", header=TRUE, sep = '\t')

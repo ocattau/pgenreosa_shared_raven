@@ -28,7 +28,7 @@ table_no_zeros<-as.data.frame(crossprod(table(df)))
 simple_data_cleaned<-simple_data[apply(simple_data, 1, function(row) all(row !=0)),]
 genelist<-long_data_zeros %>% group_by(tissue)
 output<-genelist %>% summarise("total reads (n)"=sum(binary),  "mean tpm" = mean(tpm), "Q4 tpm" = quantile(tpm, c(0.75)))
-write.csv(output, file="/Users/oliviacattau/Documents/GitHub/code/characterize_larval_transciptome/genelist_02_24_22.tab")
+#write.csv(output, file="/Users/oliviacattau/Documents/GitHub/code/characterize_larval_transciptome/genelist_02_24_22.tab")
 ```
 
 #AH's tidy alternative approach: 

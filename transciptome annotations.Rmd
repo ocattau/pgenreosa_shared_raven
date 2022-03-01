@@ -33,25 +33,31 @@ output<-genelist %>% summarise("total reads (n)"=sum(binary),  "mean tpm" = mean
 
 #AH's tidy alternative approach: 
 ```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.14")
+library(BiocManager)
 library(tidyr)
 library(dplyr)
 library(UpSetR)
+library(ComplexHeatmap)
 tidy_data<-countMatrix
 head(tidy_data)
 #now add the binary column
-tidy_data_long$binary=ifelse(tidy_data_long$tpm > 0, 1, 0)
 tidy_data$h=ifelse(tidy_data$heart > 0, 1, 0)
 tidy_data$g=ifelse(tidy_data$gonad >0, 1, 0)
 tidy_data$c=ifelse(tidy_data$ctenidia > 0, 1, 0)
 tidy_data$l=ifelse(tidy_data$larvae > 0, 1, 0)
 tidy_data$ja=ifelse(tidy_data$juv_amb > 0, 1, 0)
 tidy_data$jsl=ifelse(tidy_data$juv_sl > 0, 1, 0)
-m1=make_comb_mat(heart=tidy_data$heart, gonad=tidy_data$gonad, larvae=tidy_data$larvae)
+#for making upset plot, not working right now because of package issues. Same code works fine on my desktop version
+m1 = make_comb_mat(heart=tidy_data$heart, gonad=tidy_data$gonad, larvae=tidy_data$larvae)
 #remove all rows with zeros, creates dataframe with all overlapping genes
 all_overlapping_genes<-tidy_data[apply(tidy_data, 1, function(row) all(row !=0)),]
 #####
 tidy_data_long<-tidy_data %>%
   gather(key="time", value="tpm", heart:larvae) #name key as time, name value as tpm, gather columns heart:larvae
+tidy_data_long$binary=ifelse(tidy_data_long$tpm > 0, 1, 0)
 head(tidy_data_long)
 #filter out zeros
 tidy_data_long_no_zeros<-tidy_data_long%>%

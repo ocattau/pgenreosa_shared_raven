@@ -4,3 +4,8 @@ author: "Olivia"
 date: "3/10/2022"
 output: html_document
 ---
+#GitHub Repository: https://github.com/ocattau/pgenreosa_transciptome_shared
+```{bash}
+#load Data
+https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa
+```

@@ -33,6 +33,8 @@ output<-genelist %>% summarise("total reads (n)"=sum(binary),  "mean tpm" = mean
 
 #AH's tidy alternative approach: 
 ```{r}
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install(version = "3.14")
@@ -50,10 +52,41 @@ tidy_data$c=ifelse(tidy_data$ctenidia > 0, 1, 0)
 tidy_data$l=ifelse(tidy_data$larvae > 0, 1, 0)
 tidy_data$ja=ifelse(tidy_data$juv_amb > 0, 1, 0)
 tidy_data$jsl=ifelse(tidy_data$juv_sl > 0, 1, 0)
-#for making upset plot, not working right now because of package issues. Same code works fine on my desktop version
-m1 = make_comb_mat(heart=tidy_data$heart, gonad=tidy_data$gonad, ctenidia=tidy_data$ctenidia, juv_amb=tidy_data$juv_amb, juv_sl=tidy_data$juv_sl, larvae=tidy_data$larvae) 
-#remove all rows with zeros, creates dataframe with all overlapping genes
-all_overlapping_genes<-tidy_data[apply(tidy_data, 1, function(row) all(row !=0)),]
+#check code
+heart_length<-sum(tidy_data$h)
+gonad_length<-sum(tidy_data$g)
+ctenidia_length<-sum(tidy_data$c)
+larvae_length<-sum(tidy_data$l)
+juv_amb_length<-sum(tidy_data$ja)
+juv_sl_length<-sum(tidy_data$jsl)
+UpSet_test<-data.frame(tissue=c(heart_length, gonad_length, ctenidia_length, larvae_length, juv_amb_length, juv_sl_length))
+rownames(UpSet_test)<-c("heart", "gonad", "ctenidia", "larvae", "juv ambient", "juv low oa")
+#for making upset plot, must install above packages. Same code works fine on my desktop version but is struggling to knit on the Raven server
+m1 = make_comb_mat(heart=tidy_data$heart, gonad=tidy_data$gonad, ctenidia=tidy_data$ctenidia, juv_amb=tidy_data$juv_amb, juv_sl=tidy_data$juv_sl, larvae=tidy_data$larvae) #only distinct intersection 
+m2 = make_comb_mat(heart=tidy_data$heart, gonad=tidy_data$gonad, ctenidia=tidy_data$ctenidia, juv_amb=tidy_data$juv_amb, juv_sl=tidy_data$juv_sl, larvae=tidy_data$larvae, mode="intersect") #only overlapping intersections (true Venn diagram) see https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html for explanation 
+set_size(m1)
+comb_size(m1)
+comb_size(m2)
+p1<-UpSet(m1 [comb_degree(m1)<=2], column_title ="All intersections of 2 or less") #intersections 2 or less
+p2<-UpSet(m1 [comb_degree(m1)>=3], column_title= "All intersection of 3 or more") #intersections 3 or more
+p3<-UpSet(m2, top_annotation = HeatmapAnnotation(
+    degree = as.character(comb_degree(m2)),
+    "Intersection\nsize" = anno_barplot(comb_size(m2), 
+        border = FALSE, 
+        gp = gpar(fill = "black"), 
+        height = unit(2, "cm")
+    ), 
+    annotation_name_side = "left", 
+    annotation_name_rot = 0), column_title="p. generosa transcriptome intersecting intersections") #intersect mode
+p4<-UpSet(m1, top_annotation = HeatmapAnnotation(
+    degree = as.character(comb_degree(m1)),
+    "Intersection\nsize" = anno_barplot(comb_size(m1), 
+        border = FALSE, 
+        gp = gpar(fill = "black"), 
+        height = unit(2, "cm")
+    ), 
+    annotation_name_side = "left", 
+    annotation_name_rot = 0), column_title="p. generosa transcriptome intersecting intersections")
 #####
 tidy_data_long<-tidy_data %>%
   gather(key="time", value="tpm", heart:larvae) #name key as time, name value as tpm, gather columns heart:larvae

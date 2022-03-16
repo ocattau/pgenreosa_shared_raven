@@ -6,6 +6,7 @@ output: html_document
 ---
 #GitHub Repository: https://github.com/ocattau/pgenreosa_transciptome_shared or https://github.com/ocattau/pgenreosa_shared_raven
 ```{bash}
-#load Data
+#links to required data
 https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa
+config_test<-https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf
 ```

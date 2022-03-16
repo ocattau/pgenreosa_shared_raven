@@ -8,5 +8,5 @@ output: html_document
 ```{bash}
 #links to required data
 https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa
-config_test<-https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf
+https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf
 ```

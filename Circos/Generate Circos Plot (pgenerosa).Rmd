@@ -11,3 +11,4 @@ https://gannet.fish.washington.edu/gigas/data/p.generosa/pgenerosa_proteins_2_10
 https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf #circos config file
 https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa #Fasta file with gene nucleotides 
 
+```

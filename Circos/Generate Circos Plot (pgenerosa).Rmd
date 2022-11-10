@@ -7,6 +7,7 @@ output: html_document
 #GitHub Repository: https://github.com/ocattau/pgenreosa_transciptome_shared or https://github.com/ocattau/pgenreosa_shared_raven
 ```{bash}
 #links to required data
-https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa
-https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf
-```
+https://gannet.fish.washington.edu/gigas/data/p.generosa/pgenerosa_proteins_2_10_2022.tab #protein data compiled
+https://gannet.fish.washington.edu/gigas/data/p.generosa/circos/circos.conf #circos config file
+https://gannet.fish.washington.edu/gigas/data/p.generosa/Panopea-generosa-v1.0.fa #Fasta file with gene nucleotides 
+
